@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/shared/auth.guard';
+import { User } from './user.decorator';
 import { UserRO } from './user.dto';
 import { UserService } from './user/user.service';
 
@@ -7,7 +9,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('api/users')
-  async showAllUsers(): Promise<UserRO[]> {
+  @UseGuards(new AuthGuard())
+  async showAllUsers(@User() user): Promise<UserRO[]> {
     return await this.userService.showAll();
   }
 

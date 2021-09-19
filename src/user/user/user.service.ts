@@ -12,7 +12,6 @@ export class UserService {
   ) {}
 
   async showAll() {
-    console.log('Here');
     const users = await this.userRepository.find();
     return users.map((user) => user.toResponseObject(false));
   }
